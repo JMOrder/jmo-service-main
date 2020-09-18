@@ -29,7 +29,7 @@ export class Client extends BaseEntity {
   @OneToMany(() => Order, (order) => order.client)
   orders: Order[];
 
-  @OneToMany(() => Item, (item) => item.client, { eager: true })
+  @OneToMany(() => Item, (item) => item.client, { eager: true, cascade: true })
   items: Item[];
 
   public archive(): void {

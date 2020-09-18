@@ -1,4 +1,4 @@
-import { MigrationInterface, QueryRunner, Table, TableForeignKey } from "typeorm";
+import { MigrationInterface, QueryRunner, Table, TableForeignKey, TableUnique } from "typeorm";
 
 export class CreateOrderItemTable1597422308609 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
@@ -30,7 +30,7 @@ export class CreateOrderItemTable1597422308609 implements MigrationInterface {
           },
           {
             name: "quantity",
-            type: "int",
+            type: "float",
             isNullable: false
           },
           {
@@ -51,6 +51,11 @@ export class CreateOrderItemTable1597422308609 implements MigrationInterface {
             referencedColumnNames: ["id"],
             referencedTableName: "items",
             onDelete: "CASCADE"
+          })
+        ],
+        uniques: [
+          new TableUnique({
+            columnNames: ["order_id", "item_id"]
           })
         ]
       })

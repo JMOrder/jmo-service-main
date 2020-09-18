@@ -1,6 +1,17 @@
-import { BaseEntity, Entity, PrimaryGeneratedColumn, Column, ManyToOne, CreateDateColumn, UpdateDateColumn, JoinColumn } from "typeorm";
+import {
+  BaseEntity,
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  ManyToOne,
+  CreateDateColumn,
+  UpdateDateColumn,
+  OneToMany,
+  DeleteDateColumn
+} from "typeorm";
 import { Client } from "./Client";
 import { Required, Property } from "@tsed/common";
+import { OrderItem } from "./OrderItem";
 
 @Entity({ name: "items" })
 export class Item extends BaseEntity {
@@ -25,12 +36,17 @@ export class Item extends BaseEntity {
   comment: string;
 
   @ManyToOne(() => Client, (client) => client.items)
-  @JoinColumn()
   client: Client | number;
+
+  @OneToMany(() => OrderItem, (orderItem) => orderItem.item)
+  orderItems: OrderItem[];
 
   @CreateDateColumn()
   createdAt: Date;
 
   @UpdateDateColumn()
   updatedAt: Date;
+
+  @DeleteDateColumn()
+  deletedAt?: Date;
 }

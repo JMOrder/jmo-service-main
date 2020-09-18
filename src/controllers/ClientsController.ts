@@ -1,4 +1,4 @@
-import { Controller, Get, PathParams, BodyParams, Post, Delete, Status } from "@tsed/common";
+import { Controller, Get, PathParams, BodyParams, Post, Delete, Status, QueryParams } from "@tsed/common";
 import { ReturnsArray, Returns } from "@tsed/swagger";
 import { ClientIndexDto, ClientGetDto } from "@dto/ClientDto";
 import { Client } from "@entity/Client";
@@ -6,6 +6,7 @@ import { plainToClass } from "class-transformer";
 import { Authenticate } from "@tsed/passport";
 import { NOT_FOUND, OK, NO_CONTENT } from "http-status-codes";
 import { NotFound } from "@tsed/exceptions";
+import { Like } from "typeorm";
 
 @Controller("/clients")
 @Authenticate("jwt-user")
@@ -19,6 +20,12 @@ export class ClientsController {
       }
     });
     return plainToClass(ClientIndexDto, clients);
+  }
+
+  @Get("/search")
+  @ReturnsArray(ClientIndexDto)
+  async search(@QueryParams("q") query: string): Promise<ClientIndexDto[]> {
+    return plainToClass(ClientIndexDto, await Client.find({ where: { name: Like(`%${decodeURIComponent(query)}%`) } }));
   }
 
   @Get("/:id")

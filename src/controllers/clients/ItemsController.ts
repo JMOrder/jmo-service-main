@@ -1,10 +1,12 @@
-import { Controller, Post, PathParams, BodyParams, Get, MergeParams, Put, Status, Delete } from "@tsed/common";
+import { Controller, Post, PathParams, BodyParams, Get, MergeParams, Put, Delete, QueryParams } from "@tsed/common";
 import { Authenticate } from "@tsed/passport";
 import { ItemGetDto, ItemIndexDto } from "@dto/ItemDto";
 import { Item } from "@entity/Item";
 import { plainToClass } from "class-transformer";
 import { Returns, ReturnsArray } from "@tsed/swagger";
-import { NO_CONTENT } from "http-status-codes";
+import { NO_CONTENT, NOT_FOUND } from "http-status-codes";
+import { Like } from "typeorm";
+import { NotFound } from "@tsed/exceptions";
 
 @Controller("/clients/:clientId/items")
 @Authenticate("jwt-user")
@@ -13,7 +15,13 @@ export class ItemsController {
   @Get("/")
   @ReturnsArray(ItemIndexDto)
   async get(@PathParams("clientId") clientId: number): Promise<ItemIndexDto[]> {
-    return plainToClass(ItemIndexDto, await Item.find({ where: { client: clientId }, order: { createdAt: "ASC" } }));
+    return plainToClass(ItemIndexDto, await Item.find({ where: { client: clientId }, order: { createdAt: "ASC" }, withDeleted: false }));
+  }
+
+  @Get("/search")
+  @ReturnsArray(ItemIndexDto)
+  async search(@PathParams("clientId") clientId: number, @QueryParams("q") query: string): Promise<ItemIndexDto[]> {
+    return plainToClass(ItemIndexDto, await Item.find({ where: { client: clientId, name: Like(`%${decodeURIComponent(query)}%`) } }));
   }
 
   @Get("/:itemId")
@@ -41,8 +49,12 @@ export class ItemsController {
   }
 
   @Delete("/:itemId")
-  @Status(NO_CONTENT)
+  @Returns(NOT_FOUND, { description: "Not found" })
+  @Returns(NO_CONTENT, { description: "OK" })
   async delete(@PathParams("clientId") clientId: number, @PathParams("itemId") itemId: number): Promise<void> {
-    await Item.delete({ id: itemId, client: clientId });
+    const item: Item | undefined = await Item.findOne({ where: { id: itemId, client: clientId } });
+    if (item == undefined) throw new NotFound("Not found");
+    // await item.softRemove();
+    await item.remove();
   }
 }

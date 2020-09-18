@@ -19,7 +19,7 @@ export class AuthController {
     return new AuthPayload(user.id, token, JWT_USER.TYPE, user.email, user);
   }
 
-  @Post("/refresh_token")
+  @Post("/refresh-token")
   @Authenticate("jwt-user")
   async refreshToken(@Req() req: Req): Promise<AuthPayload> {
     const user = <UserGetDto>req.user;
