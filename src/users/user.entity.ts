@@ -1,7 +1,7 @@
 import { Column, Entity, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, BaseEntity } from "typeorm";
 
 @Entity({ name: "users" })
-export class User extends BaseEntity {
+export class UserEntity extends BaseEntity {
 
   @PrimaryGeneratedColumn()
   id: number;
@@ -11,15 +11,6 @@ export class User extends BaseEntity {
 
   @Column()
   phone: string;
-
-  @Column()
-  password: string;
-
-  @Column()
-  isEmailVerified: boolean;
-
-  @Column()
-  isPhoneVerified: boolean;
 
   @Column()
   firstName: string;

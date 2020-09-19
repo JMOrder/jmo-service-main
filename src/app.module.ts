@@ -1,18 +1,31 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { EurekaService } from './eureka/eureka.service';
 import { AppLoggerModule } from './app-logger/app-logger.module';
 import { UsersModule } from './users/users.module';
+import { SnakeNamingStrategy } from "typeorm-naming-strategies";
+import { OrdersModule } from './orders/orders.module';
 
 @Module({
   imports: [
-    TypeOrmModule.forRoot(),
+    TypeOrmModule.forRoot({
+      type: "postgres",
+      host: "localhost",
+      port: 5432,
+      username: "jmorder_admin",
+      password: "Admin123Admin123",
+      database: "jmo_service_main_development",
+      synchronize: false,
+      logging: true,
+      entities: ["dist/**/*.entity{ .ts,.js}"],
+      migrations: [],
+      autoLoadEntities: true,
+      namingStrategy: new SnakeNamingStrategy()
+    }),
     AppLoggerModule,
-    UsersModule
+    UsersModule,
+    OrdersModule
   ],
-  controllers: [AppController],
-  providers: [AppService, EurekaService],
+  providers: [EurekaService],
 })
 export class AppModule {}

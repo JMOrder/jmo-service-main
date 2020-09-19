@@ -4,21 +4,16 @@
   "port": 5432,
   "username": "jmorder_admin",
   "password": "Admin123Admin123",
-  "database": "jmorder_tsed_development",
+  "database": "jmo_service_main_development",
   "synchronize": false,
   "logging": false,
   "entities": [
     "dist/**/*.entity{.ts,.js}"
   ],
   "migrations": [
-    "src/migration/**/*.ts"
-  ],
-  "subscribers": [
-    "src/subscriber/**/*.ts"
+    "db/migration/**/*.ts"
   ],
   "cli": {
-    "entitiesDir": "src/entity",
-    "migrationsDir": "src/migration",
-    "subscribersDir": "src/subscriber"
+    "migrationsDir": "db/migration"
   }
 }
