@@ -1,11 +1,10 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { EurekaService } from './eureka/eureka.service';
-import { AppLoggerModule } from './app-logger/app-logger.module';
 import { UsersModule } from './users/users.module';
 import { SnakeNamingStrategy } from "typeorm-naming-strategies";
 import { OrdersModule } from './orders/orders.module';
 import { ClientsModule } from './clients/clients.module';
+import { SharedModule } from './shared/shared.module';
 
 @Module({
   imports: [
@@ -23,11 +22,11 @@ import { ClientsModule } from './clients/clients.module';
       autoLoadEntities: true,
       namingStrategy: new SnakeNamingStrategy()
     }),
-    AppLoggerModule,
+    SharedModule,
     UsersModule,
     OrdersModule,
     ClientsModule
   ],
-  providers: [EurekaService],
+  providers: [],
 })
 export class AppModule {}

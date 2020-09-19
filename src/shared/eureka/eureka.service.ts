@@ -1,6 +1,6 @@
 import { Injectable, OnApplicationShutdown, OnModuleInit } from '@nestjs/common';
 import { Eureka } from 'eureka-js-client';
-import { AppLogger } from 'src/app-logger/app-logger.service';
+import { AppLogger } from '../app-logger/app-logger.service';
 
 @Injectable()
 export class EurekaService implements OnModuleInit, OnApplicationShutdown {
