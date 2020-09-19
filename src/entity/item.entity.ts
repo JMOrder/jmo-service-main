@@ -6,10 +6,10 @@ import {
   ManyToOne,
   CreateDateColumn,
   UpdateDateColumn,
-  DeleteDateColumn
+  DeleteDateColumn, OneToMany
 } from "typeorm";
-import { ClientEntity } from "../client.entity";
-// import { OrderItem } from "./OrderItem";
+import { ClientEntity } from "./client.entity";
+import { OrderItemEntity } from "./order-item.entity";
 
 @Entity({ name: "items" })
 export class ItemEntity extends BaseEntity {
@@ -31,8 +31,8 @@ export class ItemEntity extends BaseEntity {
   @ManyToOne(() => ClientEntity, (client) => client.items)
   client: ClientEntity | number;
 
-  // @OneToMany(() => OrderItem, (orderItem) => orderItem.item)
-  // orderItems: OrderItem[];
+  @OneToMany(() => OrderItemEntity, (orderItem) => orderItem.item)
+  orderItems: OrderItemEntity[];
 
   @CreateDateColumn()
   createdAt: Date;

@@ -5,6 +5,7 @@ import { SnakeNamingStrategy } from "typeorm-naming-strategies";
 import { OrdersModule } from './orders/orders.module';
 import { ClientsModule } from './clients/clients.module';
 import { SharedModule } from './shared/shared.module';
+import { OrderItemsModule } from './order-items/order-items.module';
 
 @Module({
   imports: [
@@ -25,7 +26,8 @@ import { SharedModule } from './shared/shared.module';
     SharedModule,
     UsersModule,
     OrdersModule,
-    ClientsModule
+    ClientsModule,
+    OrderItemsModule
   ],
   providers: [],
 })

@@ -1,5 +1,6 @@
+import { OrderEntity } from "./order.entity";
 import { BaseEntity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, Entity, OneToMany } from "typeorm";
-import { ItemEntity } from "./items/item.entity";
+import { ItemEntity } from "./item.entity";
 
 @Entity({ name: "clients" })
 export class ClientEntity extends BaseEntity {
@@ -21,8 +22,8 @@ export class ClientEntity extends BaseEntity {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  @OneToMany(() => Order, (order) => order.client)
-  orders: Order[];
+  @OneToMany(() => OrderEntity, (order) => order.client)
+  orders: OrderEntity[];
 
   @OneToMany(() => ItemEntity, (item) => item.client, { eager: true, cascade: true })
   items: ItemEntity[];

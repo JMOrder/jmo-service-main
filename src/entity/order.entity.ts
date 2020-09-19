@@ -1,6 +1,7 @@
-import { Entity, BaseEntity, PrimaryGeneratedColumn, ManyToOne, CreateDateColumn, UpdateDateColumn, JoinColumn } from "typeorm";
-import { UserEntity } from "src/users/user.entity";
-import { ClientEntity } from "src/clients/client.entity";
+import { Entity, BaseEntity, PrimaryGeneratedColumn, ManyToOne, CreateDateColumn, UpdateDateColumn, JoinColumn, OneToMany } from "typeorm";
+import { UserEntity } from "./user.entity";
+import { ClientEntity } from "./client.entity";
+import { OrderItemEntity } from "./order-item.entity";
 
 @Entity({ name: "orders" })
 export class OrderEntity extends BaseEntity {
@@ -15,8 +16,8 @@ export class OrderEntity extends BaseEntity {
   @JoinColumn()
   client: ClientEntity | number;
 
-  // @OneToMany(() => OrderItem, (orderItem) => orderItem.order, { eager: true, cascade: true })
-  // orderItems!: OrderItem[];
+  @OneToMany(() => OrderItemEntity, (orderItem) => orderItem.order, { eager: true, cascade: true })
+  orderItems!: OrderItemEntity[];
 
   @CreateDateColumn()
   createdAt: Date;
