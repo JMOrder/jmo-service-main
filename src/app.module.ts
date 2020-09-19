@@ -5,6 +5,7 @@ import { AppLoggerModule } from './app-logger/app-logger.module';
 import { UsersModule } from './users/users.module';
 import { SnakeNamingStrategy } from "typeorm-naming-strategies";
 import { OrdersModule } from './orders/orders.module';
+import { ClientsModule } from './clients/clients.module';
 
 @Module({
   imports: [
@@ -24,7 +25,8 @@ import { OrdersModule } from './orders/orders.module';
     }),
     AppLoggerModule,
     UsersModule,
-    OrdersModule
+    OrdersModule,
+    ClientsModule
   ],
   providers: [EurekaService],
 })
