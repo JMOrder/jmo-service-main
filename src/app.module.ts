@@ -6,6 +6,7 @@ import { OrdersModule } from './orders/orders.module';
 import { ClientsModule } from './clients/clients.module';
 import { SharedModule } from './shared/shared.module';
 import { OrderItemsModule } from './order-items/order-items.module';
+import { ProfileModule } from './profile/profile.module';
 
 @Module({
   imports: [
@@ -27,7 +28,8 @@ import { OrderItemsModule } from './order-items/order-items.module';
     UsersModule,
     OrdersModule,
     ClientsModule,
-    OrderItemsModule
+    OrderItemsModule,
+    ProfileModule
   ],
   providers: [],
 })

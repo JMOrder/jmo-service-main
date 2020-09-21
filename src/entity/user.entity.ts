@@ -27,4 +27,8 @@ export class UserEntity extends BaseEntity {
 
   @OneToMany(() => OrderEntity, (order) => order.user)
   orders: OrderEntity[];
+
+  static findByEmail(email: string): Promise<UserEntity> {
+    return this.findOne({ where: { email } });
+  }
 }
