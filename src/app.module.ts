@@ -13,13 +13,15 @@ import * as Joi from '@hapi/joi';
 @Module({
   imports: [
     ConfigModule.forRoot({
+      isGlobal: true,
       validationSchema: Joi.object({
         NODE_ENV: Joi.string()
           .valid('development', 'production', 'test', 'provision')
           .default('development'),
         PORT: Joi.number().default(3000),
         GOOGLE_CLOUD_PUBSUB_PROJECT_ID: Joi.string().default('jmorder'),
-        GOOGLE_CLOUD_PUBSUB_SUBSCRIPTION_PREFIX: Joi.string().default('jmo-service-main')
+        GOOGLE_CLOUD_PUBSUB_SUBSCRIPTION_PREFIX: Joi.string().default('jmo-service-main'),
+        SERVICE_RSA_PUBLIC_KEY: Joi.string().required()
       }),
     }),
     TypeOrmModule.forRoot({
