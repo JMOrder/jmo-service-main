@@ -1,9 +1,9 @@
-import { Injectable, OnApplicationShutdown, OnModuleInit } from '@nestjs/common';
+import { BeforeApplicationShutdown, Injectable, OnModuleInit } from '@nestjs/common';
 import { Eureka } from 'eureka-js-client';
 import { AppLogger } from '../app-logger/app-logger.service';
 
 @Injectable()
-export class EurekaService implements OnModuleInit, OnApplicationShutdown {
+export class EurekaService implements OnModuleInit, BeforeApplicationShutdown {
   readonly client: Eureka;
   constructor(private appLogger: AppLogger) {
     this.appLogger.setContext("EurekaService");
@@ -33,21 +33,26 @@ export class EurekaService implements OnModuleInit, OnApplicationShutdown {
         servicePath: "/eureka/apps/",
         fetchRegistry: true,
         registerWithEureka: true,
-        maxRetries: 10,
+        maxRetries: 5,
         requestRetryDelay: 2000
       },
       logger: appLogger
     });
   }
-  onModuleInit() {
-    this.client.start((error) => {
-      if (error) {
-        return this.appLogger.error(error);
-      }
-      this.appLogger.info("Main Server registered");
+  onModuleInit(): Promise<void> {
+    return new Promise((resolve, reject) => {
+      this.client.start((error) => {
+        if (error) {
+          this.appLogger.error(error);
+          reject(error);
+          return;
+        }
+        this.appLogger.info("Main Server registered");
+        resolve();
+      });
     });
   }
-  onApplicationShutdown(signal?: string) {
+  beforeApplicationShutdown(): Promise<void> {
     return new Promise((resolve, reject) => {
       this.client.stop((error) => {
         if (error) {
@@ -55,7 +60,7 @@ export class EurekaService implements OnModuleInit, OnApplicationShutdown {
           return reject()
         }
         this.appLogger.info("Main Server de-registered");
-        return resolve()
+        resolve()
       });
     });
   }
