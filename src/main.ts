@@ -19,7 +19,7 @@ const bootstrap = async () => {
 
   const configService = app.get(ConfigService);
   const appLogger = app.get(AppLogger);
-  app.useGlobalPipes(new ValidationPipe());
+  app.useGlobalPipes(new ValidationPipe({ transform: true }));
   app.useLogger(appLogger);
   app.use(morgan('dev'));
   app.enableShutdownHooks();
