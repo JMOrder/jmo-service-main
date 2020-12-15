@@ -21,7 +21,7 @@ import * as Joi from '@hapi/joi';
         PORT: Joi.number().default(3000),
         GOOGLE_CLOUD_PUBSUB_PROJECT_ID: Joi.string().default('jmorder'),
         GOOGLE_CLOUD_PUBSUB_SUBSCRIPTION_PREFIX: Joi.string().default('jmo-service-main'),
-        SERVICE_RSA_PUBLIC_KEY: Joi.string().required()
+        SERVICE_RSA_PUBLIC_KEY: Joi.string().replace(/\\n/g, '\n').required()
       }),
     }),
     TypeOrmModule.forRoot({
