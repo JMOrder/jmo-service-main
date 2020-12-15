@@ -14,7 +14,7 @@ export class JwtService {
   }
 
   private getUsername(token: string): string {
-    const SERVICE_RSA_PUBLIC_KEY: string = this.configService.get('SERVICE_RSA_PUBLIC_KEY')
+    const SERVICE_RSA_PUBLIC_KEY: string = this.configService.get('SERVICE_RSA_PUBLIC_KEY');
     const { sub: username } = <Record<string, unknown>> jwt.verify(token, SERVICE_RSA_PUBLIC_KEY, JWT_AUTH_TOKEN_OPTIONS);
     return <string>username;
   }
