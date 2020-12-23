@@ -28,6 +28,10 @@ export class ClientEntity extends BaseEntity {
   @OneToMany(() => ItemEntity, (item) => item.client, { eager: true, cascade: true })
   items: ItemEntity[];
 
+  static async findById(id: number): Promise<ClientEntity> {
+    return this.findOneOrFail({ id });
+  }
+
   public archive(): void {
     this.archived = true;
   }

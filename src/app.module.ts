@@ -32,7 +32,7 @@ import * as Joi from '@hapi/joi';
       password: "Admin123Admin123",
       database: "jmo_service_main_development",
       synchronize: false,
-      logging: false,
+      logging: true,
       entities: ["dist/**/*.entity{ .ts,.js}"],
       migrations: [],
       autoLoadEntities: true,

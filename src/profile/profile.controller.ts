@@ -1,4 +1,4 @@
-import { Controller, Get, Headers } from '@nestjs/common';
+import { Controller, Get, Headers, HttpException, HttpStatus } from '@nestjs/common';
 import { UserEntity } from 'src/entity/user.entity';
 import { JwtService } from 'src/shared/jwt/jwt.service';
 
@@ -6,7 +6,9 @@ import { JwtService } from 'src/shared/jwt/jwt.service';
 export class ProfileController {
   constructor(private jwtService: JwtService) {}
   @Get()
-  findProfile(@Headers("Authorization") authorization: string): Promise<UserEntity> {
-    return this.jwtService.getUser(authorization.replace("Bearer ", ""));
+  async findProfile(@Headers("Authorization") authorization: string): Promise<UserEntity> {
+    const user: UserEntity = await this.jwtService.getUser(authorization.replace("Bearer ", ""));
+    if (!user) throw new HttpException("NOT FOUND", HttpStatus.NOT_FOUND);
+    return user;
   }
 }

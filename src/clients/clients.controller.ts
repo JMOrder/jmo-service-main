@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Post, Query } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put, Query } from '@nestjs/common';
 import { plainToClass } from 'class-transformer';
 import { Like } from 'typeorm';
 import { ClientEntity } from '../entity/client.entity';
@@ -14,6 +14,7 @@ export class ClientsController {
         archived: false
       }
     });
+  
     return plainToClass(ClientIndexDto, clients);
   }
 
@@ -29,6 +30,12 @@ export class ClientsController {
 
   @Post("/")
   async create(@Body() client: ClientEntity): Promise<ClientGetDto | null> {
+    return plainToClass(ClientGetDto, await client.save());
+  }
+
+  @Put("/:id")
+  async update(@Param("id") id: number, @Body() client: ClientEntity): Promise<ClientGetDto | null> {
+    console.log(client);
     return plainToClass(ClientGetDto, await client.save());
   }
 
