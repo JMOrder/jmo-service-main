@@ -9,4 +9,6 @@ export class ItemIndexDto {
   @Expose() unitName: string;
 
   @Expose() quantityName: string;
+  
+  @Expose() favorite: boolean;
 }

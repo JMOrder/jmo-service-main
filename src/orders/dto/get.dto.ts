@@ -1,6 +1,6 @@
 import { Exclude, Expose, Type } from "class-transformer";
 import { ClientGetDto } from "src/clients/dto/get.dto";
-import { OrderItemOrderContentDto } from "src/order-items/dto/order-content.dto";
+import { OrderItemGetDto } from "src/orders/order-items/dto/get.dto";
 import { UserIndexDto } from "src/users/dto/Index.dto";
 
 @Exclude()
@@ -16,8 +16,8 @@ export class OrderGetDto {
   client: ClientGetDto;
 
   @Expose()
-  @Type(() => OrderItemOrderContentDto)
-  orderItems: OrderItemOrderContentDto[];
+  @Type(() => OrderItemGetDto)
+  orderItems: OrderItemGetDto[];
 
   @Expose() createdAt: Date;
   @Expose() updatedAt: Date;

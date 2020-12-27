@@ -28,6 +28,9 @@ export class ItemEntity extends BaseEntity {
   @Column()
   comment: string;
 
+  @Column()
+  favorite: boolean;
+
   @ManyToOne(() => ClientEntity, (client) => client.items)
   client: ClientEntity | number;
 

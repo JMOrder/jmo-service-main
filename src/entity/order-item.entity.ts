@@ -9,11 +9,11 @@ export class OrderItemEntity extends BaseEntity {
 
   @ManyToOne(() => OrderEntity, (order) => order.orderItems)
   @JoinColumn()
-  order: OrderEntity;
+  order: OrderEntity | number;
 
   @ManyToOne(() => ItemEntity, (item) => item.orderItems, { eager: true })
   @JoinColumn()
-  item: ItemEntity;
+  item: ItemEntity | number;
 
   @Column()
   unitAmount: number;

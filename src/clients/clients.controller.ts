@@ -35,7 +35,6 @@ export class ClientsController {
 
   @Put("/:id")
   async update(@Param("id") id: number, @Body() client: ClientEntity): Promise<ClientGetDto | null> {
-    console.log(client);
     return plainToClass(ClientGetDto, await client.save());
   }
 

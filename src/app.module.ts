@@ -6,7 +6,6 @@ import { SnakeNamingStrategy } from "typeorm-naming-strategies";
 import { OrdersModule } from './orders/orders.module';
 import { ClientsModule } from './clients/clients.module';
 import { SharedModule } from './shared/shared.module';
-import { OrderItemsModule } from './order-items/order-items.module';
 import { ProfileModule } from './profile/profile.module';
 import * as Joi from '@hapi/joi';
 
@@ -42,7 +41,6 @@ import * as Joi from '@hapi/joi';
     UsersModule,
     OrdersModule,
     ClientsModule,
-    OrderItemsModule,
     ProfileModule
   ],
   providers: [],

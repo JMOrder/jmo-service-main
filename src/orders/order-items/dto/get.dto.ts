@@ -1,7 +1,7 @@
 import { Expose, Type } from "class-transformer";
 import { ItemIndexDto } from "src/clients/items/dto/index.dto";
 
-export class OrderItemOrderContentDto {
+export class OrderItemGetDto {
   @Expose()
   id: number;
 

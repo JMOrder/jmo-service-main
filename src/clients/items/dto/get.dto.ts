@@ -11,4 +11,6 @@ export class ItemGetDto {
   @Expose() quantityName: string;
 
   @Expose() comment: string;
+
+  @Expose() favorite: boolean;
 }
