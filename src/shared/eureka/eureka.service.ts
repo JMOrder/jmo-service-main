@@ -1,11 +1,12 @@
 import { BeforeApplicationShutdown, Injectable, OnModuleInit } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { Eureka } from 'eureka-js-client';
 import { AppLogger } from '../app-logger/app-logger.service';
 
 @Injectable()
 export class EurekaService implements OnModuleInit, BeforeApplicationShutdown {
   readonly client: Eureka;
-  constructor(private appLogger: AppLogger) {
+  constructor(private appLogger: AppLogger, private readonly configService: ConfigService) {
     this.appLogger.setContext("EurekaService");
     this.client = new Eureka({
       // application instance information
@@ -15,7 +16,7 @@ export class EurekaService implements OnModuleInit, BeforeApplicationShutdown {
         instanceId: "main-service",
         ipAddr: "127.0.0.1",
         port: {
-          $: parseInt(process.env.PORT) || 3000,
+          $: this.configService.get('PORT'),
           "@enabled": true
         },
         statusPageUrl: "http://localhost:3000/actuator/info",
